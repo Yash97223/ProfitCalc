@@ -1,0 +1,24 @@
+version: 0.2
+env:
+    variables:
+        publish_artifact: ".\artifact\eShopOnWeb"
+        zip_artifact: ".\artifact\eShopOnWeb.zip"
+    shell: powershell.exe 
+phases:
+    install:
+        commands:
+            - Start-BitsTransfer -Source "https://builds.dotnet.microsoft.com/dotnet/Sdk/6.0.428/dotnet-sdk-6.0.428-win-x64.exe" -Destination ".\dotnet-sdk-6.0.428-win-x64.exe"
+            - Start-Process -FilePath ".\dotnet-sdk-6.0.428-win-x64.exe" -ArgumentList "/quiet" -NoNewWindow -Wait
+    build:
+        commands:
+            - cd ProfitCalc.Web
+            - dotnet restore
+            - dotnet build --configuration Release
+            - dotnet publish --configuration Release --output $publish_artifact
+            - Get-ChildItem -Path "$publish_artifact" -Filter "web.config" -Recurse | Remove-Item -Force
+            - Compress-Archive -Path $publish_artifact -DestinationPath $zip_artifact -Update
+artifacts:
+    files:
+        - .\ProfitCalc.Web\artifact\*.zip
+        - .\ProfitCalc.Web\appspec.yml
+        - .\ProfitCalc.Web\scripts\**\*
