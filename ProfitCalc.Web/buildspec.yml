@@ -14,9 +14,13 @@ phases:
             - cd ProfitCalc.Web
             - dotnet restore
             - dotnet build --configuration Release
+            - $publish_artifact=".\artifact\eShopOnWeb"
+            - $zip_artifact=".\artifact\eShopOnWeb.zip"
             - dotnet publish --configuration Release --output $publish_artifact
             - Get-ChildItem -Path "$publish_artifact" -Filter "web.config" -Recurse | Remove-Item -Force
             - Compress-Archive -Path $publish_artifact -DestinationPath $zip_artifact -Update
+            - ls
+            - ls .\artifact
 artifacts:
     files:
         - .\ProfitCalc.Web\artifact\*.zip
