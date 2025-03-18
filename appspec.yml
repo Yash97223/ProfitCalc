@@ -1,0 +1,13 @@
+version: 0.0
+os: windows
+files:
+  - source: \
+    destination: C:\inetpub\deployment\eShopOnWeb
+file_exists_behavior: OVERWRITE
+permissions:
+  - object: C:\inetpub\deployment\eShopOnWeb
+    acls:
+      - "IIS_IUSRS:(M)"
+hooks:
+  AfterInstall:
+    - location: scripts\start-iis-website.ps1
