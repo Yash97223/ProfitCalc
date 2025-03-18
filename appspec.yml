@@ -10,4 +10,5 @@ permissions:
       - "IIS_IUSRS:(M)"
 hooks:
   AfterInstall:
-    - location: scripts\start-iis-website.ps1
+    - location: ProfitCalc.Web\scripts\start-iis-website.ps1
+
