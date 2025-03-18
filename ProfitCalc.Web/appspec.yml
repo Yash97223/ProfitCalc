@@ -10,6 +10,6 @@ file_exists_behavior: OVERWRITE
 #       - "IIS_IUSRS:(M)"
 hooks:
   BeforeInstall:
-    - location: \scripts\stop-iis-website.bat
+    - location: scripts\stop-iis-website.bat
   AfterInstall:
-    - location: \scripts\start-iis-website.bat
+    - location: scripts\start-iis-website.bat
